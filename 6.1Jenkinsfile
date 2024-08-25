@@ -20,12 +20,11 @@ pipeline {
                     mail to: "jngow0803@gmail.com",
                              subject: "Successful Tests",
                              body: "Testa are successful. See attached logs for details.",
-                             attachLog: true, compressLog: true             
+                                         
                 }
                 failure{
                     mail subject: "Failure Tests",
                              body: "Tests are failed. See attached logs for details.",
-                             attachLog: true,    
                              to: "jngow0803@gmail.com"   
                 }
             }
