@@ -1,0 +1,101 @@
+pipeline {
+    agent any
+
+    
+
+    stages{
+        stage('Build'){
+            steps{
+                echo "Building code using Maven"
+            }
+        } 
+
+        stage('Unit and Integration Tests'){
+            steps{
+                echo "Running unit tests using JUnit"
+                echo "Running integration test using JUnit"
+            }
+            
+            post{
+                success{
+                    emailext subject: "Successful Tests",
+                    body: "Testa are successful. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"             
+                }
+                failure{
+                    emailext subject: "Failure Tests",
+                    body: "Tests are failed. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"   
+                }
+            }
+        }
+
+        stage('Code Analysis'){
+            steps{
+                echo "Analysing code using Qodana"
+            }
+            }
+        }
+
+        stage('Security Scan'){
+            steps{
+                 echo "Deploying security scan using Veracode"
+            }
+            
+
+            post{
+                success{
+                    emailext subject: "Successful Scan",
+                    body: "Scan is successful. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"             
+                }
+                failure{
+                    emailext subject: "Failure Scan",
+                    body: "Scan is failed. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"   
+                }
+            
+            }
+        }
+
+        stage('Deploy to staging'){
+            steps{
+                echo "Deploying application to AWS EC2 server"
+            }
+        }
+
+        stage('Integration Tests om Staging'){
+            steps{
+                echo "Running integration tests on AWS EC2 environment"
+            }
+
+                 post{
+                 success{
+                    emailext subject: "Successful Tests",
+                    body: "Tests are successful. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"             
+                 }
+                failure{
+                    emailext subject: "Failure Tests",
+                    body: "Tests are failed. See attached logs for details.",
+                    attachLog: true,    
+                    to: "jngow0803@gmail.com"   
+                 }
+                
+                }
+            
+         }
+        
+
+        stage('Deploy to Production'){
+            steps{
+                 echo "Code is deployed for production to AWS EC2"
+            }
+        }
+    
+}
