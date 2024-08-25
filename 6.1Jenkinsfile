@@ -17,7 +17,7 @@ pipeline {
             
             post{
                 success{
-                    mail subject: "Successful Tests",
+                    emailext subject: "Successful Tests",
                     body: "Tests are successful. See attached logs for details.",
                     to: "jngow0803@gmail.com"             
                 }
