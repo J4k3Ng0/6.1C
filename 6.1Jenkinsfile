@@ -94,7 +94,7 @@ pipeline {
 
         stage('Deploy to Production'){
             steps{
-                 echo "Code is deployed for production to AWS EC2"
+                 echo "Code is deployed for production to AWS EC2" 
             }
         }
     
