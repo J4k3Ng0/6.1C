@@ -1,7 +1,6 @@
 pipeline {
     agent any
 
-    
 
     stages{
         stage('Build'){
@@ -36,7 +35,6 @@ pipeline {
             steps{
                 echo "Analysing code using Qodana"
             }
-            }
         }
 
         stage('Security Scan'){
@@ -44,7 +42,6 @@ pipeline {
                  echo "Deploying security scan using Veracode"
             }
             
-
             post{
                 success{
                     emailext subject: "Successful Scan",
@@ -61,19 +58,19 @@ pipeline {
             
             }
         }
-
+        
         stage('Deploy to staging'){
             steps{
                 echo "Deploying application to AWS EC2 server"
             }
         }
 
-        stage('Integration Tests om Staging'){
+        stage('Integration Tests on Staging'){
             steps{
                 echo "Running integration tests on AWS EC2 environment"
             }
-
-                 post{
+            
+            post{
                  success{
                     emailext subject: "Successful Tests",
                     body: "Tests are successful. See attached logs for details.",
@@ -87,15 +84,13 @@ pipeline {
                     to: "jngow0803@gmail.com"   
                  }
                 
-                }
-            
-         }
-        
+            }
+        }
 
         stage('Deploy to Production'){
             steps{
                  echo "Code is deployed for production to AWS EC2"
             }
         }
-    
+    }
 }
